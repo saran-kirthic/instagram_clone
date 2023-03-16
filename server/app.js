@@ -5,10 +5,11 @@ const PORT = 5000
 const {MONGOURI} =require('./keys')
 
 require('./models/user')
+require('./models/post')
 
 app.use(express.json())
 app.use(require('./routes/auth'))
-
+app.use(require('./routes/posts'))
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser:true,
@@ -20,7 +21,7 @@ mongoose.connection.on('connected',()=>{
 mongoose.connection.on('error',()=>{
     console.log('err connecting',err)
 })
-// mongo_atlas_database_password: 77aa856208qQzlJq
+// mongo_atlas_database_password: IXlkDaaBzkuaOBwy
 
 
 app.get('/',(req,res)=>{
