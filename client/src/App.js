@@ -7,6 +7,8 @@ import Home from './components/screens/home';
 import Signin from './components/screens/login';
 import Profile from './components/screens/profile';
 import Signup from './components/screens/signup';
+import CreatePost from './components/screens/createPost';
+
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <Route path="/Profile" element={<Profile />}>
       </Route>
       <Route path="/Signup" element={<Signup />}>
+      </Route>
+      <Route path="/createPost" element={<CreatePost />}>
       </Route>
       </Routes>
       
