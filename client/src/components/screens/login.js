@@ -1,6 +1,42 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-const login = ()=>{
+import { useState } from "react";
+import {Link,useNavigate} from 'react-router-dom';
+import M from 'materialize-css';
+import { validEmail } from './regex';
+const Login = ()=>{
+    const navigate = useNavigate();
+    const [password,setPassword] = useState("")
+    const [email,setEmail] = useState("")
+    const PostData=()=>{
+        if(!validEmail.test(email)){
+            M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
+            return
+        }
+        fetch("/signin",{
+            method:"post",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                password:password,
+                email:email
+
+            })
+            }).then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+                if(data.error){
+                    M.toast({html: data.error,classes:"#c62828 red darken-3"})
+                }
+                else{
+                    M.toast({html: "signed in",classes:"#43a047 green darken-1"})
+                    navigate("/")
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
+        }
+    
     return(
         <div className='mycard'>
             <div className="card auth-card input-field">
@@ -8,12 +44,18 @@ const login = ()=>{
                 <input
                 type="text"
                 placeholder='email'
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
                 />
                 <input
                 type="text"
                 placeholder='password'
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
                 />
-                <button className="btn waves-effect waves-light #64b5f6 blue lighten-2" type="submit" name="action">
+                <button className="btn waves-effect waves-light #64b5f6 blue lighten-2" 
+                onClick={()=>PostData()}
+                >
                     login
                 </button>
                 <h6>
@@ -25,4 +67,4 @@ const login = ()=>{
     )
 }
 
-export default login;
+export default Login;
