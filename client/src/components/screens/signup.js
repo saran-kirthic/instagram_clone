@@ -43,9 +43,13 @@ const Signup = ()=>{
     
 
     return(
+        // <div>
+            //  {/* <video id="background-video" loop autoPlay>
+            //     <source src="https://www.pexels.com/video/woman-relaxation-dark-books-4866054/" type="video/mp4" />
+            // </video> */}
         <div className='mycard'>
             <div className="card auth-card input-field">
-                <h2 className='brand-logo'>Instagram</h2>
+                <h2 className='brand-logo'>Trendogram</h2>
                 <input
                 type="text"
                 placeholder='name'
@@ -75,6 +79,7 @@ const Signup = ()=>{
 
             </div>
         </div>
+        // </div>
     )
 }
 

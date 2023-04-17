@@ -40,7 +40,7 @@ const Login = ()=>{
     return(
         <div className='mycard'>
             <div className="card auth-card input-field">
-                <h2 className='brand-logo'>Instagram</h2>
+                <h2 className='brand-logo'>Trendogram</h2>
                 <input
                 type="text"
                 placeholder='email'
