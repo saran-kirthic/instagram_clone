@@ -1,6 +1,19 @@
-import React from 'react';
+import React,{useEffect,useState,useContext} from 'react';
+import { UserContext } from '../../App';
 
-const profile = ()=>{
+const Profile = ()=>{
+    const [mypic,setPic]=useState([])
+    const {state,dispatch} = useContext(UserContext)
+    useEffect(()=>{
+        fetch('/mypost',{
+            headers:{
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            setPic(result.mypost)
+        })
+    },[])
     return(
         <div style={{maxWidth:"550px",margin:"0px auto"}}>
             <div style={{
@@ -16,7 +29,7 @@ const profile = ()=>{
                 </div>              
                 <div>
                 <h4>
-                    saran kirthic
+                    {state?state.name:"loading"}
                 </h4>
                 <div style={{display:"flex",justifyContent:"space-between",width:"110%"}}>
                     <h6>60 posts</h6>
@@ -26,15 +39,16 @@ const profile = ()=>{
                 </div>
             </div>
             <div className='gallery'>
-                <img className='item' src='https://storage.googleapis.com/kaggle-avatars/images/4949763-kg.jpg' />
-                <img className='item' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Uu-n9zXL4dken1UhtkiD9qVJN2gvhzOiyxejV67iqA&usqp=CAU&ec=48665701' />
-                <img className='item' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrZxh-bPSXWaYi4PF2OJZarX0maFF-SRjR2ImRJEoz-A&usqp=CAU&ec=48665701' />
-                <img className='item' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQayl5RDJXbkoSVzuzc_tExUFeEaeaCvn4cpmmlAxA2kA&usqp=CAU&ec=48665701' />
-                <img className='item' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuxYHBWAXHFpNg5nJm4scfcXGAruJEmx_v-YrWmWA19g&usqp=CAU&ec=48665701' />
-                <img className='item' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDbh-iGKI0C6VTLwLFdTJUXFFUWIBXkbmlPosYDk2Upw&usqp=CAU&ec=48665701' />
+                {
+                    mypic.map(item=>{
+                        return(
+                            <img key={item._id} className='item' src={item.photo} alt={item.title} />
+                        )
+                    })
+                }
             </div>
         </div>
     )
 }
 
-export default profile;
+export default Profile;
